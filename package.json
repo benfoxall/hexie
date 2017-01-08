@@ -5,7 +5,7 @@
   "main": "dist/hexie.js",
   "main:next": "src/main.js",
   "scripts": {
-    "test": "tape test/* | tap-spec && eslint src test",
+    "test": "eslint src",
     "build": "rollup -c",
     "watch": "nodemon --exec \"npm run build\" --watch src"
   },
