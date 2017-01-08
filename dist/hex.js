@@ -11,6 +11,19 @@ var padZero = function (str, i) {
   return str
 };
 
+var norm = function (str) {
+  switch (str) {
+  case '\t':
+    return '.'
+  case '\n':
+    return '.'
+  case ' ':
+    return '.'
+  default:
+    return str
+  }
+};
+
 
 var Hex = function Hex (buffer) {
   this.buffer = buffer;
@@ -26,16 +39,53 @@ Hex.prototype.render = function render () {
 
   var items = this.buffer.byteLength;
 
-  this.element.textContent = '';
+  var rows = Math.ceil(items/16);
 
-  for (var i = 0; i < items; i++) {
-    this$1.element.textContent += padZero(this$1.view.getUint8(i).toString(16), 2) + ' ';
+
+  var rowText = '';
+
+  for (var i = 0; i < rows; i++) {
+    rowText += padZero((i*16).toString(16), 5) + '\n';
   }
 
-  this.textContent += '    \n';
-  for (var i = 0; i < items; i++) {
-    this$1.element.textContent += String.fromCharCode(this$1.view.getUint8(i));
+  document.querySelector('#addr').innerText = rowText;
+
+  var hexText = '';
+
+  for (var i$1 = 0; i$1 < rows; i$1++) {
+    for (var j = 0; j < 16; j++) {
+      try {
+        hexText +=
+          padZero(
+            this$1.view.getUint8(i$1*16 + j)
+            .toString(16), 2
+          ) + ' ';
+      } catch (e) {
+        hexText += '-- ';
+      }
+    }
+
+    hexText += '\n';
   }
+
+  document.querySelector('#hex').innerText = hexText;
+
+
+  var textText = '';
+
+  for (var i$2 = 0; i$2 < rows; i$2++) {
+    for (var j$1 = 0; j$1 < 16; j$1++) {
+      try {
+        textText += norm(String.fromCharCode(this$1.view.getUint8(i$2*16 + j$1)));
+      } catch (e) {
+        textText += ' ';
+      }
+    }
+
+    textText += '\n';
+  }
+
+  document.querySelector('#text').innerText = textText;
 
   return this
 };

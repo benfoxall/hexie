@@ -5,6 +5,19 @@ const padZero = (str, i) => {
   return str
 }
 
+const norm = str => {
+  switch (str) {
+  case '\t':
+    return '.'
+  case '\n':
+    return '.'
+  case ' ':
+    return '.'
+  default:
+    return str
+  }
+}
+
 
 class Hex {
 
@@ -20,16 +33,53 @@ class Hex {
   render() {
     const items = this.buffer.byteLength
 
-    this.element.textContent = ''
+    var rows = Math.ceil(items/16)
 
-    for (var i = 0; i < items; i++) {
-      this.element.textContent += padZero(this.view.getUint8(i).toString(16), 2) + ' '
+
+    let rowText = ''
+
+    for (let i = 0; i < rows; i++) {
+      rowText += padZero((i*16).toString(16), 5) + '\n'
     }
 
-    this.textContent += '    \n'
-    for (var i = 0; i < items; i++) {
-      this.element.textContent += String.fromCharCode(this.view.getUint8(i))
+    document.querySelector('#addr').innerText = rowText
+
+    let hexText = ''
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < 16; j++) {
+        try {
+          hexText +=
+            padZero(
+              this.view.getUint8(i*16 + j)
+              .toString(16), 2
+            ) + ' '
+        } catch (e) {
+          hexText += '-- '
+        }
+      }
+
+      hexText += '\n'
     }
+
+    document.querySelector('#hex').innerText = hexText
+
+
+    let textText = ''
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < 16; j++) {
+        try {
+          textText += norm(String.fromCharCode(this.view.getUint8(i*16 + j)))
+        } catch (e) {
+          textText += ' '
+        }
+      }
+
+      textText += '\n'
+    }
+
+    document.querySelector('#text').innerText = textText
 
     return this
   }

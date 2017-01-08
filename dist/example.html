@@ -9,32 +9,22 @@
       body {font-family: Roboto Mono, monospace;}
       aside section {
         white-space: pre;
-        padding: 1em;
       }
       aside {
-        position: fixed;
         display: flex;
         justify-content: space-around;
         border: 1px solid #000;
         background: #fff;
-        max-height: 100vh;
-        overflow: scroll;
       }
     </style>
   </head>
   <body>
     <aside>
-      <section id="address">0001
-0002
-0003
-0004</section>
-      <section id="hex">3c 21 44 4f 43 54 59 50 45 20 68 74 6d 6c 3e 0a
-20 20 20 20 3c 6d 65 74 61 20 63 68 61 72 73 65
-74 3d 22 75 74 66 2d 38 22 3e 0a 20 20 20 20 3c
-74 69 74 6c 65 3e 65 78 61 6d 70 6c 65 3f</section>
-      <section id="text">a b c e d f / \ f /
-      </section>
+      <section id="addr"></section>
+      <section id="hex"></section>
+      <section id="text"></section>
     </aside>
+
 
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=fetch"></script>
     <script src="hex.js"></script>
@@ -48,7 +38,6 @@
           new Hex(buffer)
             .render()
         })
-
 
         // document.addEventListener("selectionchange", function(e) {
         //   console.log(e)
