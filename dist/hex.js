@@ -11,85 +11,98 @@ var padZero = function (str, i) {
   return str
 };
 
-var norm = function (str) {
-  switch (str) {
-  case '\t':
-    return '.'
-  case '\n':
-    return '.'
-  case ' ':
-    return '.'
-  default:
-    return str
-  }
-};
 
+var UI = function (rows, cols) {
 
-var Hex = function Hex (buffer) {
-  this.buffer = buffer;
-  this.view = new DataView(buffer);
+  var root = document.createElement('aside');
 
-  this.element = document.createElement('p');
-  this.element.style.fontFamily = 'monospace';
-  document.body.appendChild(this.element);
-};
+  var number_root = document.createElement('section');
+  var hex_root    = document.createElement('section');
+  var text_root   = document.createElement('section');
 
-Hex.prototype.render = function render () {
-    var this$1 = this;
+  root.appendChild(number_root);
+  root.appendChild(hex_root);
+  root.appendChild(text_root);
 
-  var items = this.buffer.byteLength;
+  for(var i = 0; i < rows; i++) {
+    var number = document.createElement('div');
+    number.innerText = i;
 
-  var rowSize = 16;
+    var hexes = document.createElement('div');
+    var texts = document.createElement('div');
 
-  var rows = Math.ceil(items/rowSize);
+    for(var j = 0; j < cols; j++) {
 
+      var hex  = document.createElement('span');
+      var text = document.createElement('span');
 
-  var rowText = '';
+      hex.innerText = '__';
+      text.innerText = '.';
 
-  for (var i = 0; i < rows; i++) {
-    rowText += padZero((i*rowSize).toString(16), 5) + '\n';
-  }
+      hexes.appendChild(hex);
+      texts.appendChild(text);
 
-  document.querySelector('#addr').innerText = rowText;
-
-  var hexText = '';
-
-  for (var i$1 = 0; i$1 < rows; i$1++) {
-    for (var j = 0; j < rowSize; j++) {
-      try {
-        hexText +=
-          padZero(
-            this$1.view.getUint8(i$1*rowSize + j)
-            .toString(16), 2
-          ) + ' ';
-      } catch (e) {
-        hexText += '-- ';
-      }
     }
 
-    hexText += '\n';
+    number_root.appendChild(number);
+    hex_root.appendChild(hexes);
+    text_root.appendChild(texts);
+
   }
 
-  document.querySelector('#hex').innerText = hexText;
+  document.body.appendChild(root);
+
+  // display data to this
+  return function(view) {
+
+    var idx, j, value;
+
+    for (var i = 0; i < rows; i++) {
+      // populate number
+      number_root.children[i].innerText =  padZero((i*cols).toString(16), 5);
+
+      for(j = 0; j < cols; j++) {
+
+        idx = i * cols + j;
+
+        if(idx >= view.byteLength) {
+          hex_root.children[i].children[j].innerText = '__';
+          text_root.children[i].children[j].innerText = '_';
 
 
-  var textText = '';
+        } else {
+          value = view.getUint8(i * cols + j);
 
-  for (var i$2 = 0; i$2 < rows; i$2++) {
-    for (var j$1 = 0; j$1 < rowSize; j$1++) {
-      try {
-        textText += norm(String.fromCharCode(this$1.view.getUint8(i$2*16 + j$1)));
-      } catch (e) {
-        textText += ' ';
+          // populate hex
+          hex_root.children[i].children[j].innerText =
+            padZero(value.toString(16), 2);
+
+          // populate text
+          text_root.children[i].children[j].innerText =
+            String.fromCharCode(value);
+
+
+        }
+
       }
+
     }
 
-    textText += '\n';
   }
 
-  document.querySelector('#text').innerText = textText;
+};
 
-  return this
+var Hex = function (buffer) {
+
+  var cols = 16;
+  var rows = buffer.byteLength / cols;
+
+  var ui = UI(rows, cols);
+
+  // render
+  var view = new DataView(buffer);
+  ui(view);
+
 };
 
 return Hex;
