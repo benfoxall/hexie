@@ -39,13 +39,15 @@ Hex.prototype.render = function render () {
 
   var items = this.buffer.byteLength;
 
-  var rows = Math.ceil(items/16);
+  var rowSize = 16;
+
+  var rows = Math.ceil(items/rowSize);
 
 
   var rowText = '';
 
   for (var i = 0; i < rows; i++) {
-    rowText += padZero((i*16).toString(16), 5) + '\n';
+    rowText += padZero((i*rowSize).toString(16), 5) + '\n';
   }
 
   document.querySelector('#addr').innerText = rowText;
@@ -53,11 +55,11 @@ Hex.prototype.render = function render () {
   var hexText = '';
 
   for (var i$1 = 0; i$1 < rows; i$1++) {
-    for (var j = 0; j < 16; j++) {
+    for (var j = 0; j < rowSize; j++) {
       try {
         hexText +=
           padZero(
-            this$1.view.getUint8(i$1*16 + j)
+            this$1.view.getUint8(i$1*rowSize + j)
             .toString(16), 2
           ) + ' ';
       } catch (e) {
@@ -74,7 +76,7 @@ Hex.prototype.render = function render () {
   var textText = '';
 
   for (var i$2 = 0; i$2 < rows; i$2++) {
-    for (var j$1 = 0; j$1 < 16; j$1++) {
+    for (var j$1 = 0; j$1 < rowSize; j$1++) {
       try {
         textText += norm(String.fromCharCode(this$1.view.getUint8(i$2*16 + j$1)));
       } catch (e) {

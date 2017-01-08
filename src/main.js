@@ -33,13 +33,15 @@ class Hex {
   render() {
     const items = this.buffer.byteLength
 
-    var rows = Math.ceil(items/16)
+    const rowSize = 16
+
+    var rows = Math.ceil(items/rowSize)
 
 
     let rowText = ''
 
     for (let i = 0; i < rows; i++) {
-      rowText += padZero((i*16).toString(16), 5) + '\n'
+      rowText += padZero((i*rowSize).toString(16), 5) + '\n'
     }
 
     document.querySelector('#addr').innerText = rowText
@@ -47,11 +49,11 @@ class Hex {
     let hexText = ''
 
     for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < 16; j++) {
+      for (let j = 0; j < rowSize; j++) {
         try {
           hexText +=
             padZero(
-              this.view.getUint8(i*16 + j)
+              this.view.getUint8(i*rowSize + j)
               .toString(16), 2
             ) + ' '
         } catch (e) {
@@ -68,7 +70,7 @@ class Hex {
     let textText = ''
 
     for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < 16; j++) {
+      for (let j = 0; j < rowSize; j++) {
         try {
           textText += norm(String.fromCharCode(this.view.getUint8(i*16 + j)))
         } catch (e) {
