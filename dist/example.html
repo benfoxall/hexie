@@ -8,7 +8,7 @@
   <body>
 
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=fetch"></script>
-    <script src="hex.js"></script>
+    <script src="hexie.js"></script>
     <script type="text/javascript">
 
       fetch('example.html')
@@ -16,7 +16,7 @@
           return res.arrayBuffer()
         })
         .then(function(buffer){
-          Hex(buffer)
+          hexie(buffer)
         })
 
 
@@ -26,7 +26,7 @@
       //   arr[i] = Math.random() * (i/arr.length) * 255
       // }
       //
-      // Hex(arr.buffer)
+      // hexie(arr.buffer)
 
 
 

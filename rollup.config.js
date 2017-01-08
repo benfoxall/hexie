@@ -2,8 +2,8 @@ import buble from 'rollup-plugin-buble'
 
 export default {
   entry: 'src/main.js',
-  dest: 'dist/hex.js',
+  dest: 'dist/hexie.js',
   format: 'umd',
-  moduleName: 'Hex',
+  moduleName: 'hexie',
   plugins: [ buble() ]
 }

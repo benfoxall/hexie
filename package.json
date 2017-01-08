@@ -1,8 +1,8 @@
 {
-  "name": "hex",
+  "name": "hexie",
   "version": "1.0.0",
-  "description": "An in-browser hex viewer",
-  "main": "index.js",
+  "description": "An in-browser hex viewer hack",
+  "main": "dist/hexie.js",
   "main:next": "src/main.js",
   "scripts": {
     "test": "tape test/* | tap-spec && eslint src test",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/benfoxall/hex.git"
+    "url": "git+https://github.com/benfoxall/hexie.git"
   },
   "author": "Ben Foxall (@benjaminbenben)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/benfoxall/hex/issues"
+    "url": "https://github.com/benfoxall/hexie/issues"
   },
-  "homepage": "https://github.com/benfoxall/hex#readme",
+  "homepage": "https://github.com/benfoxall/hexie#readme",
   "devDependencies": {
     "eslint": "^3.13.0",
     "nodemon": "^1.11.0",

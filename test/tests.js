@@ -1,4 +1,4 @@
-const hex = require('../dist/hex')
+const hex = require('../dist/hexie')
 const tape = require('tape')
 
 tape.test('hex is a function', test => {
