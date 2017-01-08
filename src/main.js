@@ -7,9 +7,14 @@ const Hex = (buffer) => {
 
   const ui = UI(rows, cols)
 
-  // render
+  
+  //console.time('build')
   const view = new DataView(buffer)
+  //console.timeEnd('build')
+
+  //console.time('render')
   ui(view)
+  //console.timeEnd('render')
 
 }
 

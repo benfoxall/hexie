@@ -11,30 +11,41 @@ var padZero = function (str, i) {
   return str
 };
 
+var norm_map = {
+  '\n': ' ',
+  '\t': ' '
+};
+
+var norm = function (s) { return norm_map[s] || s; };
 
 var UI = function (rows, cols) {
 
-  var root = document.createElement('aside');
+  var root = createElement('aside');
+  style(root);
 
-  var number_root = document.createElement('section');
-  var hex_root    = document.createElement('section');
-  var text_root   = document.createElement('section');
+  var number_root = createElement('section');
+  var hex_root    = createElement('section');
+  var text_root   = createElement('section');
+
+  style(number_root);
+  style(hex_root);
+  style(text_root);
 
   root.appendChild(number_root);
   root.appendChild(hex_root);
   root.appendChild(text_root);
 
   for(var i = 0; i < rows; i++) {
-    var number = document.createElement('div');
+    var number = createElement('div');
     number.innerText = i;
 
-    var hexes = document.createElement('div');
-    var texts = document.createElement('div');
+    var hexes = createElement('div');
+    var texts = createElement('div');
 
     for(var j = 0; j < cols; j++) {
 
-      var hex  = document.createElement('span');
-      var text = document.createElement('span');
+      var hex  = createElement('span');
+      var text = createElement('span');
 
       hex.innerText = '__';
       text.innerText = '.';
@@ -79,7 +90,7 @@ var UI = function (rows, cols) {
 
           // populate text
           text_root.children[i].children[j].innerText =
-            String.fromCharCode(value);
+            norm(String.fromCharCode(value));
 
 
         }
@@ -92,6 +103,39 @@ var UI = function (rows, cols) {
 
 };
 
+function createElement(name) {
+  var element = document.createElement(name);
+  style(element);
+  return element
+}
+
+function style(element) {
+  switch (element.tagName) {
+
+  case 'ASIDE':
+    element.style.fontFamily = 'monospace';
+    element.style.display = 'flex';
+    element.style.justifyContent = 'space-around';
+    break
+
+  case 'SECTION':
+    element.style.margin = '0 1em';
+    break
+
+  case 'DIV':
+    element.style.whiteSpace = 'nowrap';
+    element.style.height = '1em';
+    break
+
+  case 'SPAN':
+    element.style.display = 'inline-bloc';
+    element.style.margin = 'auto .2em';
+    break
+
+  }
+
+}
+
 var Hex = function (buffer) {
 
   var cols = 16;
@@ -99,9 +143,14 @@ var Hex = function (buffer) {
 
   var ui = UI(rows, cols);
 
-  // render
+  
+  //console.time('build')
   var view = new DataView(buffer);
+  //console.timeEnd('build')
+
+  //console.time('render')
   ui(view);
+  //console.timeEnd('render')
 
 };
 

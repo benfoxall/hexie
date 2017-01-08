@@ -5,30 +5,41 @@ const padZero = (str, i) => {
   return str
 }
 
+const norm_map = {
+  '\n': ' ',
+  '\t': ' '
+}
+
+const norm = s => norm_map[s] || s
 
 const UI = (rows, cols) => {
 
-  const root = document.createElement('aside')
+  const root = createElement('aside')
+  style(root)
 
-  const number_root = document.createElement('section')
-  const hex_root    = document.createElement('section')
-  const text_root   = document.createElement('section')
+  const number_root = createElement('section')
+  const hex_root    = createElement('section')
+  const text_root   = createElement('section')
+
+  style(number_root)
+  style(hex_root)
+  style(text_root)
 
   root.appendChild(number_root)
   root.appendChild(hex_root)
   root.appendChild(text_root)
 
   for(let i = 0; i < rows; i++) {
-    const number = document.createElement('div')
+    const number = createElement('div')
     number.innerText = i
 
-    const hexes = document.createElement('div')
-    const texts = document.createElement('div')
+    const hexes = createElement('div')
+    const texts = createElement('div')
 
     for(let j = 0; j < cols; j++) {
 
-      const hex  = document.createElement('span')
-      const text = document.createElement('span')
+      const hex  = createElement('span')
+      const text = createElement('span')
 
       hex.innerText = '__'
       text.innerText = '.'
@@ -73,7 +84,7 @@ const UI = (rows, cols) => {
 
           // populate text
           text_root.children[i].children[j].innerText =
-            String.fromCharCode(value)
+            norm(String.fromCharCode(value))
 
 
         }
@@ -87,3 +98,38 @@ const UI = (rows, cols) => {
 }
 
 export default UI
+
+
+
+function createElement(name) {
+  const element = document.createElement(name)
+  style(element)
+  return element
+}
+
+function style(element) {
+  switch (element.tagName) {
+
+  case 'ASIDE':
+    element.style.fontFamily = 'monospace'
+    element.style.display = 'flex'
+    element.style.justifyContent = 'space-around'
+    break
+
+  case 'SECTION':
+    element.style.margin = '0 1em'
+    break
+
+  case 'DIV':
+    element.style.whiteSpace = 'nowrap'
+    element.style.height = '1em'
+    break
+
+  case 'SPAN':
+    element.style.display = 'inline-bloc'
+    element.style.margin = 'auto .2em'
+    break
+
+  }
+
+}
