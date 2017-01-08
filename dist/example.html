@@ -6,25 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
     <style media="screen">
-      body {font-family: Roboto Mono, monospace;}
-      aside section {
-        white-space: pre;
-      }
+
       aside {
+        font-family: Roboto Mono, monospace;
         display: flex;
         justify-content: space-around;
-        border: 1px solid #000;
-        background: #fff;
       }
+
+      aside section {
+        margin: 0 1em;
+      }
+
+      aside div {
+        white-space: nowrap;
+      }
+
+      aside span {
+        height: 1em;
+        display: inline-block;
+        margin: auto .1em;
+      }
+
     </style>
   </head>
   <body>
-    <aside>
-      <section id="addr"></section>
-      <section id="hex"></section>
-      <section id="text"></section>
-    </aside>
-
 
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=fetch"></script>
     <script src="hex.js"></script>
@@ -35,13 +40,20 @@
           return res.arrayBuffer()
         })
         .then(function(buffer){
-          new Hex(buffer)
-            .render()
+          Hex(buffer)
         })
 
-        // document.addEventListener("selectionchange", function(e) {
-        //   console.log(e)
-        // }, false)
+
+      //
+      // var arr = new Uint8Array(2048)
+      // for (var i = 0; i < arr.length; i++) {
+      //   arr[i] = Math.random() * (i/arr.length) * 255
+      // }
+      //
+      // Hex(arr.buffer)
+
+
+
     </script>
   </body>
 </html>
