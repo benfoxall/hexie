@@ -32,6 +32,11 @@ Hex.prototype.render = function render () {
     this$1.element.textContent += padZero(this$1.view.getUint8(i).toString(16), 2) + ' ';
   }
 
+  this.textContent += '    \n';
+  for (var i = 0; i < items; i++) {
+    this$1.element.textContent += String.fromCharCode(this$1.view.getUint8(i));
+  }
+
   return this
 };
 

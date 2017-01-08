@@ -26,6 +26,11 @@ class Hex {
       this.element.textContent += padZero(this.view.getUint8(i).toString(16), 2) + ' '
     }
 
+    this.textContent += '    \n'
+    for (var i = 0; i < items; i++) {
+      this.element.textContent += String.fromCharCode(this.view.getUint8(i))
+    }
+
     return this
   }
 
