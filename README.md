@@ -1,4 +1,4 @@
-# hex [![Build Status](https://travis-ci.org/benfoxall/hex.svg?branch=master)](https://travis-ci.org/benfoxall/hex)
+# hexie [![Build Status](https://travis-ci.org/benfoxall/hexie.svg?branch=master)](https://travis-ci.org/benfoxall/hexie)
 
 ## [demo](https://benjaminbenben.com/hexie/)
 
